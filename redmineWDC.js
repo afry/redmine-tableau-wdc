@@ -63,8 +63,6 @@
 		var offset=0;
 		var total=101;
 		var tableData = [];
-		tableau.connectionData = "10.125.10.103:8888";
-		tableau.username = "mattias";
 		do {
 			( function( captured_total ) {
 			$.ajax({dataType: "json",
@@ -106,8 +104,8 @@
 	$(document).ready(function () {
 		$("#submitButton").click(function () {
 			tableau.connectionName = "Redmine Feed";
-			tableau.connectionData = $('input[name="connectionData"]').val();
-			tableau.username = $('input[name="username"]').val();
+			tableau.connectionData = document.getElementById("connectionData").value;
+			tableau.username = document.getElementById("username").value;
 			tableau.password = $('input[type="password"]').val();
 			tableau.submit();
 		});
