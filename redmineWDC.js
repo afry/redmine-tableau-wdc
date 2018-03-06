@@ -1,6 +1,30 @@
 (function () {
     var myConnector = tableau.makeConnector();
 	
+	// Init function for connector, called during every phase
+//	myConnector.init = function(initCallback) {
+//		tableau.authType = tableau.authTypeEnum.basic;
+
+//		if (tableau.phase === tableau.phaseEnum.interactivePhase) {
+
+//			tableau.connectionName = "Redmine Feed";
+//			tableau.connectionData = $('input[name="connectionData"]').val();
+//			tableau.username = $('input[name="username"]').val();
+//			tableau.password = $('input[type="password"]').val();
+//			tableau.submit();
+//		}
+//		initCallback();
+//		if (tableau.phase === tableau.phaseEnum.interactivePhase) {
+			// Listen for form submission, grab values, and register them with Tableau.
+//			$('form').submit(function() {
+//				tableau.username = $('input[name="username"]').val();
+//				tableau.password = $('input[type="password"]').val();
+//				tableau.submit();
+//			});
+//		}
+
+//	}
+	
     myConnector.getSchema = function (schemaCallback) {
 		tableau.log("Hello "+tableau.username+"! Welcome to Redmine WDC!");
 		var cols = [{
@@ -39,12 +63,14 @@
 		var offset=0;
 		var total=101;
 		var tableData = [];
+		tableau.connectionData = "10.125.10.103:8888";
+		tableau.username = "mattias";
 		do {
 			( function( captured_total ) {
 			$.ajax({dataType: "json",
 				type: "GET",
-				// Get all issues
-				url: "http://10.125.10.103:8888/issues.json?status_id=*&limit=100&offset=" + offset,
+				// Get all issues status_id=*
+				url: "http://" + tableau.connectionData + "/issues.json?limit=100&offset=" + offset,
 				async: false,
 				beforeSend: function (xhr) {
 					xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
@@ -75,13 +101,15 @@
 	};
 
     tableau.registerConnector(myConnector);
+//	tableau.submit();
+	
 	$(document).ready(function () {
-    $("#submitButton").click(function () {
-        tableau.connectionName = "Redmine TIGER Support Feed";
-		tableau.username = $('input[name="username"]').val();
-		tableau.password = $('input[type="password"]').val();
-
-        tableau.submit();
-    });
-});
+		$("#submitButton").click(function () {
+			tableau.connectionName = "Redmine Feed";
+			tableau.connectionData = $('input[name="connectionData"]').val();
+			tableau.username = $('input[name="username"]').val();
+			tableau.password = $('input[type="password"]').val();
+			tableau.submit();
+		});
+	});
 })();
