@@ -68,7 +68,7 @@
 			$.ajax({dataType: "json",
 				type: "GET",
 				// Get all issues status_id=*
-				url: "http://" + tableau.connectionData + "/issues.json?limit=100&offset=" + offset,
+				url: "http://" + tableau.connectionData + "/issues.json?status_id=*&limit=100&offset=" + offset,
 				async: false,
 				beforeSend: function (xhr) {
 					xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
